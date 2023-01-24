@@ -46,7 +46,7 @@ namespace TodoApp_ServerAPI.Controllers
                 }
                 else
                 {
-                    return Ok("Todo Created");
+                    return Ok(createSuccessful);
                 }
             }
 
@@ -60,7 +60,7 @@ namespace TodoApp_ServerAPI.Controllers
                 }
                 else
                 {
-                    return Ok("Item Updated");
+                    return Ok(updateSuccessful);
                 }
             }
 
@@ -74,7 +74,7 @@ namespace TodoApp_ServerAPI.Controllers
                 }
                 else
                 {
-                    return Ok("Item Deleted");
+                    return Ok(deleteSuccessful);
                 }
             }
 

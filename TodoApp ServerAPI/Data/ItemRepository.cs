@@ -19,7 +19,7 @@ namespace TodoApp_ServerAPI.Data
 
         public async Task<TodoItem> GetTodoItemById(int id)
         {
-            return (await _context.TodoItems.FirstOrDefaultAsync(todoItem => todoItem.TodoItemId == id)) ?? throw new InvalidOperationException();
+            return (await _context.TodoItems.FirstOrDefaultAsync(todoItem => todoItem.TodoItemId == id));
         }
 
         public async Task<bool> CreateTodoItem(TodoItem item)

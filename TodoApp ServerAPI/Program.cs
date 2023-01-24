@@ -1,11 +1,14 @@
+
+using auth.Controllers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using TodoApp_ServerAPI.Data.Interfaces;
 using TodoApp_ServerAPI.Data;
 using TodoApp_ServerAPI.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CORSPolicy", builder =>
@@ -23,23 +26,30 @@ builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddScoped<JwtService>();
 
 builder.Services.AddControllers();
+
+// Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(swaggerGenOptions =>
+{
+    swaggerGenOptions.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoApp", Version = "v1" });
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(swaggerUiOptions =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    swaggerUiOptions.DocumentTitle = "TodoApp";
+    swaggerUiOptions.SwaggerEndpoint("/swagger/v1/swagger.json", "TodoApp ServerSide");
+    swaggerUiOptions.RoutePrefix = string.Empty;
+});
+app.MapControllers();
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseCors("CORSPolicy");
 
-app.MapControllers();
+
 
 app.Run();

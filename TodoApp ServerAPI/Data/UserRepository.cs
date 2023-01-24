@@ -28,12 +28,12 @@ namespace TodoApp_ServerAPI.Data
 
         public async Task<User> GetUserByUserName(string userName)
         {
-            return await _context.Users.FirstOrDefaultAsync(user => user.UserName == userName) ?? throw new InvalidOperationException();
+            return await _context.Users.FirstOrDefaultAsync(user => user.UserName == userName);
         }
 
         public User GetUserByUserId(int userId)
         {
-            return _context.Users.FirstOrDefault(u => u.UserId == userId) ?? throw new InvalidOperationException();
+            return _context.Users.FirstOrDefault(u => u.UserId == userId);
         }
     }
 }
